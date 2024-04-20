@@ -1,5 +1,6 @@
 'use client'
 import { Login } from '@/services/Login';
+import { getUsers } from '@/services/User';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Alert from '../Alert/Alert';
@@ -16,7 +17,11 @@ const SignIn = () => {
 
         try {
             const token = await Login(email, password);
+            const user = await getUsers(token, 'email=' + email);
+
             localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+            
             setError(false)
             setTimeout(() => {
                 router.push('/user/list');

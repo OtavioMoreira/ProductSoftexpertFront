@@ -114,16 +114,168 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/user/list"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("user/list") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("/user/list") &&
                     "bg-graydark dark:bg-meta-4"
                     }`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="white" x="0px" y="0px" width="25" height="25" viewBox="0 0 30 30">
                     <path d="M 6.6015625 3 C 5.6875625 3 5 4 5 4 C -0.235 4 2.6532344 12.355891 1.1152344 13.587891 C 1.1152344 13.587891 2.058 14.753906 5 14.753906 L 5 15.751953 C 4.187 17.869953 -2.9605947e-16 17.087 0 21 L 8.0234375 21 C 8.7274375 20.574 11 19.392578 11 19.392578 C 10.457 18.812578 9.6736719 17.809781 9.3886719 17.050781 C 8.7646719 16.737781 8.237 16.369953 8 15.751953 L 8 14.742188 C 8.19 14.742188 8.7502656 14.698297 8.9472656 14.654297 C 8.5012656 13.967297 8.125 12.401438 8.125 11.523438 C 8.125 9.2904375 9.0866406 7.4537344 10.681641 6.3027344 C 10.200641 4.4617344 9.1325625 3 6.6015625 3 z M 23 3 C 20.777 3 19.412031 4.5292031 19.082031 6.5332031 C 20.698031 7.3992031 21.75 9.2661875 21.75 11.617188 C 21.75 12.352187 21.578578 13.059422 21.392578 13.607422 C 21.461578 13.878422 21.5 14.180625 21.5 14.515625 C 21.5 16.985625 19 19.449219 19 19.449219 C 19.543 19.686219 21.280234 20.569 21.990234 21 L 30 21 C 30 15.75 25.737 17.25 25 15 L 25 13.5 C 25.332 13.333 26.122656 12.183156 26.222656 11.285156 C 26.482656 11.265156 27 10.629547 27 10.060547 C 27 9.4915469 26.819109 9.2521562 26.662109 9.1601562 C 26.662109 9.1601562 27 8.409 27 7.5 C 27 5.679 26.508 4 25 4 C 25 4 24.567 3 23 3 z M 15 7 C 12.308 7 10.125 8.6214375 10.125 11.523438 C 10.125 12.750438 10.8125 13.707031 10.8125 13.707031 C 10.8125 13.707031 10.5 13.860625 10.5 14.515625 C 10.5 15.788625 11.318359 16.09375 11.318359 16.09375 C 11.432359 17.10175 13 18.578125 13 18.578125 L 13 20.263672 C 12.158 22.789672 7 21.125 7 27 L 23 27 C 23 21.105 17.842 22.789672 17 20.263672 L 17 18.578125 C 17 18.578125 18.567641 17.10175 18.681641 16.09375 C 18.681641 16.09375 19.5 15.528625 19.5 14.515625 C 19.5 13.813625 19.1875 13.707031 19.1875 13.707031 C 19.1875 13.707031 19.75 12.637188 19.75 11.617188 C 19.75 9.5721875 18.724 8 17 8 C 17 8 16.268 7 15 7 z"></path>
                   </svg>
-                  Users
+                  Usuarios
                 </Link>
               </li>
+
+              <SidebarLinkGroup
+                activeCondition={
+                  pathname === "/product" || pathname.includes("product")
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <Link
+                        href="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/product" ||
+                            pathname.includes("product")) &&
+                          "bg-graydark dark:bg-meta-4"
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" fill="white" width="25" height="25" viewBox="0 0 50 50">
+                          <path d="M 1 3 L 1 15 L 3 15 L 3 48 L 47 48 L 47 15 L 49 15 L 49 3 Z M 3 5 L 47 5 L 47 13 L 3 13 Z M 5 15 L 45 15 L 45 46 L 5 46 Z M 17.5 19 C 15.578125 19 14 20.578125 14 22.5 C 14 24.421875 15.578125 26 17.5 26 L 32.5 26 C 34.421875 26 36 24.421875 36 22.5 C 36 20.578125 34.421875 19 32.5 19 Z M 17.5 21 L 32.5 21 C 33.339844 21 34 21.660156 34 22.5 C 34 23.339844 33.339844 24 32.5 24 L 17.5 24 C 16.660156 24 16 23.339844 16 22.5 C 16 21.660156 16.660156 21 17.5 21 Z"></path>
+                        </svg>
+                        Produtos
+                        <svg
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"
+                            }`}
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                            fill=""
+                          />
+                        </svg>
+                      </Link>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${!open && "hidden"
+                          }`}
+                      >
+                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                          <li>
+                            <Link
+                              href="/product/type"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/product/type" &&
+                                "text-white"
+                                }`}
+                            >
+                              Tipo
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/product/list"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/product/list" &&
+                                "text-white"
+                                } `}
+                            >
+                              Lista
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <!-- Dropdown Menu End --> */}
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+
+              <SidebarLinkGroup
+                activeCondition={
+                  pathname === "/sales" || pathname.includes("sales")
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <Link
+                        href="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/sales" ||
+                            pathname.includes("sales")) &&
+                          "bg-graydark dark:bg-meta-4"
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" fill="white" width="25" height="25" viewBox="0 0 50 50">
+                          <path d="M 1 3 L 1 15 L 3 15 L 3 48 L 47 48 L 47 15 L 49 15 L 49 3 Z M 3 5 L 47 5 L 47 13 L 3 13 Z M 5 15 L 45 15 L 45 46 L 5 46 Z M 17.5 19 C 15.578125 19 14 20.578125 14 22.5 C 14 24.421875 15.578125 26 17.5 26 L 32.5 26 C 34.421875 26 36 24.421875 36 22.5 C 36 20.578125 34.421875 19 32.5 19 Z M 17.5 21 L 32.5 21 C 33.339844 21 34 21.660156 34 22.5 C 34 23.339844 33.339844 24 32.5 24 L 17.5 24 C 16.660156 24 16 23.339844 16 22.5 C 16 21.660156 16.660156 21 17.5 21 Z"></path>
+                        </svg>
+                        Vendas
+                        <svg
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"
+                            }`}
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                            fill=""
+                          />
+                        </svg>
+                      </Link>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${!open && "hidden"
+                          }`}
+                      >
+                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                          <li>
+                            <Link
+                              href="/sales/dashboard"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/sales/dashboard" &&
+                                "text-white"
+                                }`}
+                            >
+                              Dashboard
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/sales/list"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/sales/list" &&
+                                "text-white"
+                                } `}
+                            >
+                              Lista
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <!-- Dropdown Menu End --> */}
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
             </ul>
           </div>
 

@@ -1,8 +1,8 @@
 import axiosUtils from '../utils/AxiosConfig';
 
-const getUsers = async (token, params = '') => {
+const getProductsType = async (token, params = '') => {
     try {
-        const response = await axiosUtils.get('/getUsers?' + params, {
+        const response = await axiosUtils.get('/getProductsType?' + params, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -15,13 +15,13 @@ const getUsers = async (token, params = '') => {
     }
 };
 
-const deleteUsers = async (token, id) => {
+const deleteProductsType = async (token, id) => {
     const requestData = {
         id: id
     };
 
     try {
-        const response = await axiosUtils.post('/deleteUsers', JSON.stringify(requestData), {
+        const response = await axiosUtils.post('/deleteProductsType', JSON.stringify(requestData), {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -33,15 +33,15 @@ const deleteUsers = async (token, id) => {
     }
 };
 
-const addUsers = async (token, params) => {
+const addProductsType = async (token, params) => {
     const requestData = {
-        username: params.username,
-        email: params.email,
-        password: params.password,
+        name: params.name,
+        description: params.description,
+        percentage: params.percentage,
     };
 
     try {
-        const response = await axiosUtils.post('/addUsers', JSON.stringify(requestData), {
+        const response = await axiosUtils.post('/addProductsType', JSON.stringify(requestData), {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -54,27 +54,16 @@ const addUsers = async (token, params) => {
     }
 };
 
-const logoutUser = async (token) => {
-    try {
-        const response = await axiosUtils.post('/logout');
-
-        return response;
-    } catch (error) {
-        console.error('Erro ao fazer a requisição:', error);
-        throw error;
-    }
-};
-
-const updateUsers = async (token, params) => {
+const updateProductsType = async (token, params) => {
     const requestData = {
         id: params.id,
-        username: params.username,
-        email: params.email,
-        password: params.password,
+        name: params.name,
+        description: params.description,
+        percentage: params.percentage,
     };
 
     try {
-        const response = await axiosUtils.post('/updateUsers', JSON.stringify(requestData), {
+        const response = await axiosUtils.post('/updateProductsType', JSON.stringify(requestData), {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -87,4 +76,4 @@ const updateUsers = async (token, params) => {
     }
 };
 
-export { getUsers, deleteUsers, addUsers, updateUsers };
+export { getProductsType, deleteProductsType, addProductsType, updateProductsType };

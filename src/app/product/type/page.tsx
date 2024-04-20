@@ -1,18 +1,18 @@
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import UserList from "@/components/User/UserList";
+import ProductTypeList from "@/components/ProductType/ProductTypeList";
 
 export const metadata: Metadata = {
-  title: "User",
+  title: "Product type",
   description:
-    "User",
+    "Product type",
 };
 
 
 export default function User() {
     return (
         <DefaultLayout>
-            <UserList></UserList>
+            <ProductTypeList></ProductTypeList>
         </DefaultLayout>
     )
 }
