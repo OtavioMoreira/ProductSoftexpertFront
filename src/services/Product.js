@@ -15,6 +15,21 @@ const getProducts = async (token, params = '') => {
     }
 };
 
+const getProductsEdit = async (token, params = '') => {
+    try {
+        const response = await axiosUtils.get('/getProductsEdit?' + params, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao fazer a requisição:', error);
+        throw error;
+    }
+};
+
 const deleteProducts = async (token, id) => {
     const requestData = {
         id: id
@@ -128,4 +143,4 @@ const updateProductsRel = async (token, params) => {
     }
 };
 
-export { getProducts, deleteProducts, addProducts, updateProducts, deleteProductsRel, updateProductsRel };
+export { getProducts, deleteProducts, addProducts, updateProducts, deleteProductsRel, updateProductsRel, getProductsEdit };

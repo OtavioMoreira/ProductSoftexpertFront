@@ -80,8 +80,6 @@ export default function ProductList() {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
-        // console.log(formData)
-
         try {
             const response = await updateProducts(token, formData);
 
@@ -180,7 +178,7 @@ export default function ProductList() {
     const loadProductsType = (tokenLoader) => {
         getProductsType(tokenLoader)
             .then(data => {
-                const fieldsToIgnore = ['created_at'];
+                const fieldsToIgnore = ['percentage', 'created_at'];
 
                 const items = data.map(item => {
                     const newItem = {};
@@ -208,7 +206,7 @@ export default function ProductList() {
             getProducts(tokenLoader)
                 .then(data => {
                     // const fieldsToIgnore = ['productId', 'created_at'];
-                    const fieldsToIgnore = ['product_id', 'productId', 'old_product_type_id', 'created_at'];
+                    const fieldsToIgnore = ['percentage', 'product_id', 'productId', 'old_product_type_id', 'created_at'];
 
                     let fields = Object.keys(data[0]).filter(field => !fieldsToIgnore.includes(field));
 
@@ -489,6 +487,7 @@ export default function ProductList() {
                     <div className="relative bg-white rounded-lg shadow-lg p-8 max-w-lg"> {/* Alterado para max-w-lg */}
                         <h2 className="text-2xl font-semibold mb-4">Excluir</h2>
                         <h4 className="mb-4">Voce deseja mesmo excluir esse item?</h4>
+                        <h4 className="mb-4 font-bold">Os itens vinculados tambem serao excluidos</h4>
 
                         <div className="flex items-center justify-between w-full">
                             <button onClick={() => handleSubmitDelete(selectedRowIndex, selectedRowIndex2)} className=" mr-3 flex items-center gap-3.5 px-4 py-2 text-sm font-medium duration-300 ease-in-out bg-danger text-white lg:text-base">Deletar</button>

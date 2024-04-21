@@ -393,6 +393,7 @@ export default function UserList() {
                     <div className="relative bg-white rounded-lg shadow-lg p-8 max-w-lg"> {/* Alterado para max-w-lg */}
                         <h2 className="text-2xl font-semibold mb-4">Excluir</h2>
                         <h4 className="mb-4">Voce deseja mesmo excluir esse item?</h4>
+                        <h4 className="mb-4 font-bold">Os itens vinculados tambem serao excluidos</h4>
 
                         <div className="flex items-center justify-between w-full">
                             <button onClick={() => handleSubmitDelete(selectedRowIndex)} className=" mr-3 flex items-center gap-3.5 px-4 py-2 text-sm font-medium duration-300 ease-in-out bg-danger text-white lg:text-base">Deletar</button>

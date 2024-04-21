@@ -15,6 +15,21 @@ const getSales = async (token, params = '') => {
     }
 };
 
+const getSalesEdit = async (token, params = '') => {
+    try {
+        const response = await axiosUtils.get('/getSalesEdit?' + params, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao fazer a requisição:', error);
+        throw error;
+    }
+};
+
 const deleteSales = async (token, id) => {
     const requestData = {
         id: id
@@ -35,9 +50,13 @@ const deleteSales = async (token, id) => {
 
 const addSales = async (token, params) => {
     const requestData = {
-        name: params.name,
-        description: params.description,
-        percentage: params.percentage,
+        user_id: params.user_id,
+        product_id: params.product_id,
+        qtd: params.qtdProduct,
+        purchaseValue: params.purchasevalue,
+        taxValue: params.taxvalue,
+        totalValuePurchase: params.totaltaxvaluepurchase,
+        totalTaxValuePurchase: params.totalvaluepurchase,
     };
 
     try {
@@ -57,9 +76,13 @@ const addSales = async (token, params) => {
 const updateSales = async (token, params) => {
     const requestData = {
         id: params.id,
-        name: params.name,
-        description: params.description,
-        percentage: params.percentage,
+        user_id: params.user_id,
+        product_id: params.product_id,
+        qtd: params.qtd,
+        purchaseValue: params.purchaseValue,
+        taxValue: params.taxValue,
+        totalValuePurchase: params.totalValuePurchase,
+        totalTaxValuePurchase: params.totalTaxValuePurchase,
     };
 
     try {
@@ -76,4 +99,4 @@ const updateSales = async (token, params) => {
     }
 };
 
-export { getSales, deleteSales, addSales, updateSales };
+export { getSales, deleteSales, addSales, updateSales, getSalesEdit };
