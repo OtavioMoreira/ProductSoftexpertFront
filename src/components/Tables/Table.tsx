@@ -1,5 +1,3 @@
-import { BRAND } from "@/types/brand";
-import Image from "next/image";
 import { useEffect, useState } from 'react';
 
 interface TableProps {
@@ -10,12 +8,20 @@ interface TableProps {
 }
 
 const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => {
+  const [numCols, setNumCols] = useState(fields.length);
+
+  useEffect(() => {
+    setNumCols(fields.length);
+  }, [fields]);
+  
+  const gridTemplateColumns = `repeat(${numCols}, 1fr)`;
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="flex flex-col">
-        <div className={`grid grid-cols-${fields.length} rounded-sm bg-gray-2 dark:bg-meta-4`}>
+        <div className={`grid rounded-sm bg-gray-2 dark:bg-meta-4`} style={{ gridTemplateColumns }}>
           {fields.map((value, key) => {
-            
+
             return (
               <div key={key} className="p-2.5 xl:p-5">
                 <h5 className="text-sm font-medium uppercase xsm:text-base">
@@ -29,10 +35,10 @@ const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => 
         {items.map((item, rowIndex) => {
           return (
             <div
-              className={`grid grid-cols-${fields.length} ${rowIndex === items.length - 1
+              className={`grid ${rowIndex === items.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-strokedark"
-                }`}
+                }`} style={{ gridTemplateColumns }} 
               key={rowIndex}
             >
               {fields.map((field, colIndex) => {
@@ -59,5 +65,4 @@ const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => 
     </div>
   );
 };
-
 export default Table;

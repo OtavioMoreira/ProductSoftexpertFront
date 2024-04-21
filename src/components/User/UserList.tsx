@@ -54,7 +54,7 @@ export default function UserList() {
 
         try {
             const response = await addUsers(token, formData);
-           
+
             if (response.data == '') {
                 loadUsers(token);
                 closeModal();
@@ -80,7 +80,7 @@ export default function UserList() {
 
         try {
             const response = await updateUsers(token, formData);
-           
+
             if (response.data == '') {
                 loadUsers(token);
                 closeModal();
@@ -94,7 +94,7 @@ export default function UserList() {
         } finally {
             setAlertRender(true); // Este bloco finally será executado, independentemente de a requisição ter sucesso ou falhar
         }
-        
+
     };
 
     const handleSubmitDelete = (id) => {
@@ -139,6 +139,7 @@ export default function UserList() {
     };
 
     const handleDetailsClick = (user) => {
+        setError(false);
         setSelectedUser(user);
 
         setFormData({
@@ -280,6 +281,9 @@ export default function UserList() {
                                     required
                                 />
                             </div>
+                            <p htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número, um caractere especial e ter no mínimo 6 caracteres.
+                                </p>
                             {alertRender && (
                                 error == true ? (
                                     <div className='mb-4'>
