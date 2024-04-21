@@ -93,6 +93,7 @@ const addProducts = async (token, params) => {
 };
 
 const updateProducts = async (token, params) => {
+    console.log(params)
     const requestData = {
         id: params.id,
         name: params.name,

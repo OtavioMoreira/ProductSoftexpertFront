@@ -11,6 +11,9 @@ const Alert = ({ type, message }) => {
     case 'error':
       alertClass = 'bg-red';
       break;
+    case 'warning':
+      alertClass = 'bg-yellow-600';
+      break;
     default:
       alertClass = 'bg-blue-500';
   }

@@ -1,6 +1,6 @@
 'use client'
 import { getSales, getSalesEdit, deleteSales, addSales, updateSales } from '@/services/Sales';
-import { getProducts, getProductsEdit } from '@/services/Product';
+import { getProducts, getProductsEdit, updateProducts } from '@/services/Product';
 import { useEffect, useState } from 'react';
 import Table from "../Tables/Table";
 import { keyValue } from "@/types/keyValue";
@@ -26,6 +26,7 @@ export default function ProductTypeList() {
     const [usersFields, setUsersFields] = useState([]);
     const [usersData, setUsersData] = useState([]);
     const [error, setError] = useState<boolean>(false);
+    const [errorQtd, setErrorQtd] = useState<boolean>(false);
     const [alertRender, setAlertRender] = useState<boolean>(false);
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -54,7 +55,7 @@ export default function ProductTypeList() {
 
         getProductsEdit(token, 'id=' + value)
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setQtd(data[0].qtd)
                 setPrice(data[0].price)
                 setProductId(data[0].id)
@@ -78,10 +79,7 @@ export default function ProductTypeList() {
         const qtdValue = parseFloat(value);
         const priceValue = parseFloat(price);
         const percentage = parseFloat(tax);
-        console.log(qtdValue)
-        console.log(priceValue)
-        console.log(percentage)
-      
+
         if (!isNaN(qtdValue) && !isNaN(priceValue)) {
             const purchaseValueUnit = qtdValue * priceValue;
             const taxValueUnit = price * convertToDecimal(percentage);
@@ -91,6 +89,14 @@ export default function ProductTypeList() {
             setFormData({ ...formData, [name]: value, user_id: userId, purchasevalue: purchaseValueUnit, taxvalue: taxValueUnit.toFixed(2), totalvaluepurchase: totalValuePurchase.toFixed(2), totaltaxvaluepurchase: totalTaxValue.toFixed(2) });
         } else {
             setFormData({ ...formData, [name]: value, user_id: userId, purchasevalue: '', taxvalue: '', totalvaluepurchase: '', totaltaxvaluepurchase: '' });
+        }
+
+        if (qtdValue <= qtd && qtdValue != 0) {
+            setAlertRender(false);
+            setErrorQtd(false);
+        } else {
+            setAlertRender(true);
+            setErrorQtd(true);
         }
     };
 
@@ -114,22 +120,38 @@ export default function ProductTypeList() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        let qtdReload = (qtd - formData.qtdProduct)
+        let idReload = formData.product_id
 
-        try {
-            const response = await addSales(token, formData);
-            // console.log(response)
-            if (response.data == '') {
-                loadSales(token);
-                closeModal();
-            } else {
+        let formDataQtd = {
+            id: idReload,
+            qtd: qtdReload
+        }
+
+        if (errorQtd == false) {
+            try {
+                const response = await addSales(token, formData);
+                
+                if (response.data == '') {
+                    loadSales(token);
+                    closeModal();
+                    setAlertRender(false);
+                    await updateProducts(token, formDataQtd);
+                } else {
+                    setError(true);
+                    console.error('Erro ao adicionar produto tipo:', response.data);
+                }
+            } catch (error) {
                 setError(true);
-                console.error('Erro ao adicionar produto tipo:', response.data);
+                console.error('Erro ao adicionar produto tipo:', error);
+            } finally {
+                
+                setAlertRender(true); // Este bloco finally será executado, independentemente de a requisição ter sucesso ou falhar
             }
-        } catch (error) {
-            setError(true);
-            console.error('Erro ao adicionar produto tipo:', error);
-        } finally {
-            setAlertRender(true); // Este bloco finally será executado, independentemente de a requisição ter sucesso ou falhar
+        } else {
+            setAlertRender(true);
+            setErrorQtd(true);
         }
     };
 
@@ -141,6 +163,7 @@ export default function ProductTypeList() {
 
             if (response.data == '') {
                 loadSales(token);
+                setErrorQtd(false);
                 closeModal();
             } else {
                 setError(true);
@@ -156,7 +179,7 @@ export default function ProductTypeList() {
     };
 
     const handleSubmitDelete = (id) => {
-       
+
         try {
             deleteSales(token, id)
                 .then(response => {
@@ -324,7 +347,7 @@ export default function ProductTypeList() {
                     placeholder="Busca"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="mr-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="mr-2 w-auto rounded-lg border-[1.5px]  border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
 
                 <button onClick={() => openModal('add')} className="flex items-center gap-3.5 px-6 py-3 text-sm font-medium duration-300 ease-in-out bg-primary text-white lg:text-base">Adicionar</button>
@@ -403,6 +426,16 @@ export default function ProductTypeList() {
                                     <h2 className='font-bold text-black'>R$ {formData.totaltaxvaluepurchase}</h2>
                                 </div>
                             </div>
+
+                            {alertRender && (
+                                errorQtd == true ? (
+                                    <div className='mb-4'>
+                                        <Alert type="warning" message={`Quantidade maior que o items no estoque. Estoque: ${qtd}`} />
+                                    </div>
+                                ) : (
+                                    <span></span>
+                                )
+                            )}
 
                             {alertRender && (
                                 error == true ? (
