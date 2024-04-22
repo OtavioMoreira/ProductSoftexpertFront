@@ -99,4 +99,49 @@ const updateSales = async (token, params) => {
     }
 };
 
-export { getSales, deleteSales, addSales, updateSales, getSalesEdit };
+const getTopSoldProducts = async (token) => {
+    try {
+        const response = await axiosUtils.get('/getTopSoldProducts', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao fazer a requisição:', error);
+        throw error;
+    }
+};
+
+const getTopCustomer = async (token) => {
+    try {
+        const response = await axiosUtils.get('/getTopCustomer', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao fazer a requisição:', error);
+        throw error;
+    }
+};
+
+const getSalesByDay = async (token) => {
+    try {
+        const response = await axiosUtils.get('/getSalesByDay', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao fazer a requisição:', error);
+        throw error;
+    }
+};
+
+export { getSales, deleteSales, addSales, updateSales, getSalesEdit, getTopSoldProducts, getTopCustomer, getSalesByDay };
