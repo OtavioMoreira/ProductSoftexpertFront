@@ -202,9 +202,6 @@ export default function UserList() {
 
     return (
         <div>
-            <h4 className="text-title-sm2 font-bold mb-4 text-black dark:text-white">
-                Usuários
-            </h4>
             <div className="flex items-center justify-between w-full mb-4">
                 <input
                     type="text"

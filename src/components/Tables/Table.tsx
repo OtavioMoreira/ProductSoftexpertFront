@@ -45,9 +45,9 @@ const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => 
                 { colIndex }
                 if (field === "ações") {
                   return (
-                    <div key={colIndex} className="flex items-center justify-center p-2.5">
-                      <button onClick={() => onDetailsClick(item)} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-primary text-white lg:text-base">Detalhes</button>
-                      <button onClick={() => onDeleteClick(item.id, item.product_type_id)} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-danger text-white lg:text-base">Excluir</button>
+                    <div key={colIndex} className="p-2.5">
+                      <button onClick={() => onDetailsClick(item)} className="text-center w-full gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-primary text-white lg:text-base">Detalhes</button>
+                      <button onClick={() => onDeleteClick(item.id, item.product_type_id)} className="text-center w-full  gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-danger text-white lg:text-base">Excluir</button>
                     </div>
                   );
                 } else {
