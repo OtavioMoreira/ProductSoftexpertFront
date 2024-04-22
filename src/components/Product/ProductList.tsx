@@ -206,7 +206,7 @@ export default function ProductList() {
             getProducts(tokenLoader)
                 .then(data => {
                     // const fieldsToIgnore = ['productId', 'created_at'];
-                    const fieldsToIgnore = ['percentage', 'description', 'product_id', 'productId', 'old_product_type_id', 'created_at'];
+                    const fieldsToIgnore = ['percentage', 'product_id', 'productId', 'old_product_type_id', 'created_at'];
 
                     let fields = Object.keys(data[0]).filter(field => !fieldsToIgnore.includes(field));
 

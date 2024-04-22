@@ -120,7 +120,7 @@ export default function ProductTypeList() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         let qtdReload = (qtd - formData.qtdProduct)
         let idReload = formData.product_id
 
@@ -132,7 +132,7 @@ export default function ProductTypeList() {
         if (errorQtd == false) {
             try {
                 const response = await addSales(token, formData);
-                
+
                 if (response.data == '') {
                     loadSales(token);
                     closeModal();
@@ -146,7 +146,7 @@ export default function ProductTypeList() {
                 setError(true);
                 console.error('Erro ao adicionar produto tipo:', error);
             } finally {
-                
+
                 setAlertRender(true); // Este bloco finally será executado, independentemente de a requisição ter sucesso ou falhar
             }
         } else {
@@ -361,40 +361,38 @@ export default function ProductTypeList() {
                     <div className="relative bg-white rounded-lg shadow-lg p-8 max-w-lg"> {/* Alterado para max-w-lg */}
                         <h2 className="text-2xl font-semibold mb-4">Adicionar</h2>
                         <form onSubmit={handleSubmit}>
-                            <div className="grid grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label htmlFor="product_id" className="block text-sm font-medium text-gray-700">
-                                        Produto
-                                    </label>
-                                    <select
-                                        id="product_id"
-                                        name="product_id"
-                                        value={formData.product_id}
-                                        onChange={handleInputChangeSelect}
-                                        className="w-auto rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        required
-                                    >
-                                        <option value="">Selecione um opcao</option>
-                                        {product.map((type, index) => (
-                                            <option key={index} value={type.id}>{type.name}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div>
-                                    <label htmlFor="qtdProduct" className="block text-sm font-medium text-gray-700">
-                                        Quantidade
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="qtdProduct"
-                                        name="qtdProduct"
-                                        value={formData.qtdProduct}
-                                        onChange={handleInputChangeQtd}
-                                        className="mr-2 w-auto rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        required
-                                        disabled={!formData.product_id}
-                                    />
-                                </div>
+                            <div className='mb-4'>
+                                <label htmlFor="product_id" className="block text-sm font-medium text-gray-700">
+                                    Produto
+                                </label>
+                                <select
+                                    id="product_id"
+                                    name="product_id"
+                                    value={formData.product_id}
+                                    onChange={handleInputChangeSelect}
+                                    className="w-auto rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                    required
+                                >
+                                    <option value="">Selecione um opcao</option>
+                                    {product.map((type, index) => (
+                                        <option key={index} value={type.id}>{type.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='mb-4'>
+                                <label htmlFor="qtdProduct" className="block text-sm font-medium text-gray-700">
+                                    Quantidade
+                                </label>
+                                <input
+                                    type="number"
+                                    id="qtdProduct"
+                                    name="qtdProduct"
+                                    value={formData.qtdProduct}
+                                    onChange={handleInputChangeQtd}
+                                    className="mr-2 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                    required
+                                    disabled={!formData.product_id}
+                                />
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 mb-4">

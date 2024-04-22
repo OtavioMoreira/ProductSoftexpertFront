@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 interface TableProps {
   fields: string[];
-  items: any[];
-  onDetailsClick: (item: any) => void;
-  onDeleteClick: (item: any) => void;
+  items: string[];
+  onDetailsClick: string[];
+  onDeleteClick: (index: number) => void;
 }
 
 const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => {
@@ -13,7 +13,7 @@ const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => 
   useEffect(() => {
     setNumCols(fields.length);
   }, [fields]);
-
+  
   const gridTemplateColumns = `repeat(${numCols}, 1fr)`;
 
   return (
@@ -21,6 +21,7 @@ const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => 
       <div className="flex flex-col">
         <div className={`grid rounded-sm bg-gray-2 dark:bg-meta-4`} style={{ gridTemplateColumns }}>
           {fields.map((value, key) => {
+
             return (
               <div key={key} className="p-2.5 xl:p-5">
                 <h5 className="text-sm font-medium uppercase xsm:text-base">
@@ -37,26 +38,26 @@ const Table = ({ fields, items, onDetailsClick, onDeleteClick }: TableProps) => 
               className={`grid ${rowIndex === items.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-strokedark"
-                }`} style={{ gridTemplateColumns }}
+                }`} style={{ gridTemplateColumns }} 
               key={rowIndex}
             >
               {fields.map((field, colIndex) => {
+                { colIndex }
                 if (field === "ações") {
                   return (
-                    <div key={colIndex} className="p-2.5">
-                      <button onClick={() => onDetailsClick(item)} className="w-full gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-primary text-white lg:text-base">Detalhes</button>
-                      <button onClick={() => onDeleteClick(item)} className="w-full gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-danger text-white lg:text-base">Excluir</button>
+                    <div key={colIndex} className="flex items-center justify-center p-2.5">
+                      <button onClick={() => onDetailsClick(item)} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-primary text-white lg:text-base">Detalhes</button>
+                      <button onClick={() => onDeleteClick(item.id, item.product_type_id)} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out bg-danger text-white lg:text-base">Excluir</button>
                     </div>
                   );
                 } else {
                   return (
-                    <div key={colIndex} className="p-2.5 xl:p-5" style={{ display: 'flex', alignItems: 'center' }}>
+                    <div key={colIndex} className="flex items-center gap-3 p-2.5 xl:p-5">
                       <p className="hidden text-black dark:text-white sm:block">{item[field]}</p>
                     </div>
                   );
                 }
               })}
-
             </div>
           );
         })}
